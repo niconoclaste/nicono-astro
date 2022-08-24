@@ -1,0 +1,16 @@
+---
+// Layout Import
+import Layout from '@layouts/Layout.astro';
+
+// Components Import
+import Articles from '@components/svelte/Articles.svelte';
+
+const articles = await Astro.glob('./articles/*.md');
+
+const current = 'articles';
+const title = 'Articles';
+const titleJa = 'ライティング';
+---
+<Layout title={title} titleJa={titleJa}>
+	<Articles client:only title={title} titleJa={titleJa} current={current} articles={articles}/>
+</Layout>

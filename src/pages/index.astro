@@ -2,67 +2,55 @@
 // Layout Import
 import Layout from '@layouts/Layout.astro';
 
-// Component Imports
-// import Counter from "@components/svelte/Counter.svelte";
-
-import Hero from "@components/svelte/Hero.svelte";
-
+// Components Import
 import Header from '@components/svelte/Header.svelte';
-
 import Footer from '@components/svelte/Footer.svelte';
 
-import {default as translation} from '@assets/translation.json';
+import Hero from '@components/svelte/top/Hero.svelte';
+import About from '@components/svelte/top/About.svelte';
+import Works from '@components/svelte/top/Works.svelte';
+import Codes from '@components/svelte/top/Codes.svelte';
+import Articles from '@components/svelte/top/Articles.svelte';
 
+const worksData = await fetch('http://niconoclaste.jp/lib/works/');
+const works = await worksData.json();
 
-const works = await fetch('http://niconoclaste.jp/lib/works/').then(response => response.json());
 const articles = await Astro.glob('./articles/*.md');
+
+const current = 'home';
+const layout = 'home';
+const title = '';
+const titleJa = '';
+
 ---
+<Layout title={title} titleJa={titleJa}>
 
-
-<Layout>
 
 	<section class="l-hero">
 		<Hero />
 	</section>
-
+	
 	<main class="g-main">
-		<Header current="top" layout="top" />
-
+	
+		<Header client:only current={current} layout={layout} />
+	
 		<article class="l-article" id="about">
-
-			<header class="m-header">
-				<h2 class="title">{translation.about.title['en']}</h2>
-			</header>
+			<About client:only />
 		</article>
 
+		<article class="l-article" id="works">
+			<Works client:only works={works} />
+		</article>
 
+		<article class="l-article" id="codes">
+			<Codes client:only />
+		</article>
 
-		
+		<article class="l-article" id="articles">
+			<Articles client:only articles={articles} />
+		</article>
+
 	</main>
 
-
-<!-- <div>
-	{works.map((work) => {
-		return(
-		<p>{work.title.en}, </p>
-		)
-	})}
-</div> -->
-
-<!-- 
-	<Counter client:visible>
-		<h1>Hello, Svelte!</h1>
-	</Counter> -->
-
-
-<!-- <div>
-	{articles.map((article) => {
-		return(
-			<p>{article.frontmatter.title}, </p>
-		)
-	})}
-	</div> -->
-
-
-	<Footer/>
+	<Footer client:only />
 </Layout>

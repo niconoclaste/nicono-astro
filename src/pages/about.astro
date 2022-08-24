@@ -1,0 +1,14 @@
+---
+// Layout Import
+import Layout from '@layouts/Layout.astro';
+
+// Components Import
+import About from '@components/svelte/About.svelte';
+
+const current = 'about';
+const title = 'About';
+const titleJa = 'について';
+---
+<Layout title={title} titleJa={titleJa}>
+	<About client:only title={title} titleJa={titleJa} current={current} />
+</Layout>
