@@ -1,0 +1,68 @@
+---
+// Layout Import
+import Layout from '@layouts/Layout.astro';
+
+// Component Imports
+// import Counter from "@components/svelte/Counter.svelte";
+
+import Hero from "@components/svelte/Hero.svelte";
+
+import Header from '@components/svelte/Header.svelte';
+
+import Footer from '@components/svelte/Footer.svelte';
+
+import {default as translation} from '@assets/translation.json';
+
+
+const works = await fetch('http://niconoclaste.jp/lib/works/').then(response => response.json());
+const articles = await Astro.glob('./articles/*.md');
+---
+
+
+<Layout>
+
+	<section class="l-hero">
+		<Hero />
+	</section>
+
+	<main class="g-main">
+		<Header current="top" layout="top" />
+
+		<article class="l-article" id="about">
+
+			<header class="m-header">
+				<h2 class="title">{translation.about.title['en']}</h2>
+			</header>
+		</article>
+
+
+
+		
+	</main>
+
+
+<!-- <div>
+	{works.map((work) => {
+		return(
+		<p>{work.title.en}, </p>
+		)
+	})}
+</div> -->
+
+<!-- 
+	<Counter client:visible>
+		<h1>Hello, Svelte!</h1>
+	</Counter> -->
+
+
+<!-- <div>
+	{articles.map((article) => {
+		return(
+			<p>{article.frontmatter.title}, </p>
+		)
+	})}
+	</div> -->
+
+
+	<Footer/>
+</Layout>
